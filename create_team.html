@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+	<html>
+		<head>
+			<title>Create team</title>
+			<link rel="stylesheet" type="text/css" href="style.css">
+		</head>
+
+		<body class="select_team">
+			<h3><a id="mainHeading" href="index.html">HOME</a></h3>
+			<br>
+			<div class="ui">
+				<form action="" method="post">  
+					Player Name<br>
+					<input type="text" id="playerName" name="playerName" value=
+					"<?php if(isset($_POST["playerName"])) {echo $_POST["playerName"];}?>"> 
+					<br>
+					Club<br>
+					<input type="text" id="club" name="club" value=
+					"<?php if(isset($_POST["club"])) {echo $_POST["club"];}?>"> 
+					<br> 
+					Position<br>
+					<select id="position" name="position">
+					<option value=""></option>
+					<option value="midfielder">Midfielder</option>
+					<option value="forward">Forward</option>
+					<option value="defender">Defender</option><br>
+					<option value="goalKeeper">Goal Keeper</option><br>
+					</select><br><br>
+					<input type="submit" value="Search">
+				</form>
+				<form id="add2Team" onSubmit="processForm(event)">
+					<input type="submit" value="Add to team">
+				</form>
+			</div>
+
+			<table class="text" id="dataFromDB" onSubmit="dontProcessForm(event)">
+				<tr>
+					<th>Player Name</th>
+					<th>Club</th>
+					<th>Position</th>
+				</tr>
+			<?php
+			$servername = "database2.cs.tamu.edu";
+      $username = "vrabhilash";
+      $password = //password excluded
+      $dbname = "vrabhilash-project1";
+      $conn = new mysqli($servername, $username, $password, $dbname);
+
+      $sql = sprintf("select name, club, position from general_info where 
+			name like '%%%s%%' and club like '%%%s%%' and position like '%%%s%%' limit 8;"
+			,$_POST["playerName"], $_POST["club"], $_POST["position"]);
+      $result = $conn->query($sql);
+
+      if ($result->num_rows > 0) {
+        while($row = $result->fetch_assoc()) {
+					echo "<tr><td>".$row["name"]."</td><td>".$row["club"].
+					"</td><td>".$row["position"]."</td></tr>";
+        }
+      } else {
+					echo "<tr><td colspan=3>No results match your query, 
+					please try again</td></tr>";
+      }
+      mysqli_close($conn);
+    ?> 
+
+			</table>
+
+			<table id="forwards">
+				<th>Forwards</th>
+			</table>
+			<table id="midfielders">
+				<th>Midfielders</th>
+			</table>
+			<table id="defenders">
+				<th>Defenders</th>
+			</table>
+			<table id="goalkeeper">
+				<th>Goal Keeper</th>
+			</table>
+			<script src="myscripts.js"></script>
+
+	</html>

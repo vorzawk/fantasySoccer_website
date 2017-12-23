@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+	<html>
+		<head>
+			<title>Contribute</title>
+			<link rel="stylesheet" type="text/css" href="style.css">
+		</head>
+
+		<body class="contribute">
+		<h3><a id="mainHeading" href="index.html">HOME</a></h3>                       
+		<br>
+
+			<?php
+			$servername = "database2.cs.tamu.edu";
+      $username = "vrabhilash";
+      $password = //password excluded
+      $dbname = "vrabhilash-project1";
+      $conn = new mysqli($servername, $username, $password, $dbname);
+			?>
+
+			<div class="ui">
+				<p>Please note that only one entry can be modified per request. <br><br>
+						Type % for wildcard pattern</p>
+				<form action="" method="POST">  
+					Player Name<br>
+					<input type="text" id="playerName" name="playerName" required value=
+					"<?php if(isset($_POST["playerName"])) {echo $_POST["playerName"];}?>"> 
+					<br> 
+					Club<br>
+					<input type="text" id="club" name="club" required value=
+					"<?php if(isset($_POST["club"])) {echo $_POST["club"];}?>"> 
+					<br> 
+					Position<br>
+					<select id="position" name="position" required>
+					<option value="%"></option>
+					<option value="midfielder">Midfielder</option>
+					<option value="forward">Forward</option>
+					<option value="defender">Defender</option>
+					<option value="goalKeeper">Goal Keeper</option>
+					</select><br><br>
+					<input type="submit" name="action" value="Insert">
+					<input type="submit" name="action" value="Update">
+					<input type="submit" name="action" value="Delete">
+				</form>
+				<br>
+				<p> 
+
+      		<?php
+						/* Strings are guaranteed to not be empty because of the "required" 
+						attribute above */
+						$sql = sprintf("select name, club, position from general_info where 
+						name like '%%%s%%' and club like '%%%s%%' and position like '%%%s%%' 
+						limit 15;",$_POST["playerName"], $_POST["club"], $_POST["position"]);
+      			$result = $conn->query($sql);
+
+      			if ($result->num_rows > 1) {
+							echo "Too many entries in the database match your query, please 
+							refer to the table on the right for the matching entries.";
+						} else {
+							if ($_POST["action"] == "Insert") {
+								if ($result->num_rows == 1) {
+									echo "Entry already exists in the database!";
+								} else {
+									// Entry doesn't already exist in the database, so insert it
+									$sql = sprintf("insert into general_info(name, club, position) 
+									values('%s','%s','%s')",$_POST["playerName"], $_POST["club"], 
+									$_POST["position"]);
+
+      			  		if($conn->query($sql) == TRUE) {
+										echo "Element inserted successfully";
+									}
+							  }
+						  } elseif ($_POST["action"] == "Update") {
+
+									$sql = sprintf("update general_info set name='%s', club='%s', 
+									position='%s' where name like '%%%s%%'", $_POST["playerName"], 
+									$_POST["club"], $_POST["position"], $_POST["playerName"]);
+
+      			  		if($conn->query($sql) == TRUE) {
+										echo "Element updated successfully";
+									} else {
+										echo "Something went wrong, please note that only the club
+										or position of the player can be updated";
+									}
+							} elseif ($_POST["action"] == "Delete") {
+								if ($result->num_rows == 0) {
+									echo "The requested entry can't be deleted since it doesn't 
+									exist in the database!";
+								} else {
+									// There is exactly one matching wntry, delete it!
+
+									$sql = sprintf("delete from general_info where name like 
+									'%%%s%%' and club like '%%%s%%' and position like '%%%s%%'",
+									$_POST["playerName"], $_POST["club"], $_POST["position"]);
+									
+      			  		if($conn->query($sql) == TRUE) {
+										echo "Element deleted successfully";
+									}
+							  }
+						  }
+					  }
+					?>
+			</p>
+			</div>
+
+			<table class="text">
+				<tr>
+					<th>Player Name</th>
+					<th>Club</th>
+					<th>Position</th>
+				</tr>
+
+			<?php
+
+			/* The search query is always running */
+      $sql = sprintf("select name, club, position from general_info where 
+			name like '%%%s%%' and club like '%%%s%%' and position like '%%%s%%' limit 15;"
+			,$_POST["playerName"], $_POST["club"], $_POST["position"]);
+			// echo $sql;
+      $result = $conn->query($sql);
+
+      if ($result->num_rows > 0) {
+        while($row = $result->fetch_assoc()) {
+					echo "<tr><td>".$row["name"]."</td><td>".$row["club"]."</td><td>".
+					$row["position"]."</td></tr>";
+        }
+      } else {
+					echo "<tr><td colspan=3>No results match your 
+					query, please try again</td></tr>";
+      }
+    ?> 
+
+			</table>
+			<?php mysqli_close($conn); ?>
+		</body>
+	</html>

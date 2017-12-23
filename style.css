@@ -1,0 +1,142 @@
+.index {
+	background: url("cristiano_ronaldo.jpg");
+	background-repeat: no-repeat;
+	background-size: cover;
+	font-family: "arial"
+}
+
+.select_team {
+	background: url("lionel-messi1.jpg");
+	background-repeat: no-repeat;
+	background-size: cover;
+	font-family: "arial"
+}
+
+.contribute {
+	background: url("lionel-messi3.jpg");
+	background-repeat: no-repeat;
+	background-size: cover;
+	font-family: "arial"
+}
+
+.right {
+	float: right;
+	width: 15%;
+	margin-right: 5%;
+	margin-top: 13%;
+}
+
+.button {
+	border-radius: 5px;
+	border: 2px solid #000000;
+	background-color: Orange;
+	height: 30px;
+	width: 100%;
+	text-align: center;
+	line-height: 200%;
+}
+
+#mainHeading {
+	border-radius: 5px;
+	border: 2px solid #000000;
+	background-color: Orange;
+	width: 30%;
+	text-align: left;
+	padding: 8px;
+}
+
+a {
+	text-decoration: none;
+	color: black;
+}
+
+#home {
+	clear:both;
+}
+
+.details {
+	float:left;
+	width: 25%;
+	border-radius: 5px;
+	border: 2px solid #000000;
+	background-color: Orange;
+	margin-left: 2%;
+	margin-top: 10%;
+	text-align: left;
+	line-height: 150%;
+}
+
+input[type=text] {
+  width: 80%;
+  padding: 8px;
+  margin: 5px 5px;
+  border-radius: 4px;
+}
+
+select {
+  width: 86%;
+  padding: 8px;
+  margin: 5px 5px;
+  border-radius: 4px;
+}
+
+input[type=submit] {
+  width: 86%;
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px;
+  margin: 5px 5px;
+	border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type=submit]:hover {
+    background-color: #45a049;
+}
+
+.ui {
+	float: left;
+	width: 20%;
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+}
+
+p {
+	
+}
+
+table {
+	float: right;
+	margin: 5px;
+	background-color: #f2f2f2;
+}
+
+table, td, th {
+	border: 1px solid black;
+	border-collapse: collapse;
+}
+
+th, td {
+	text-align: center;
+	padding: 8px;
+}
+
+th {
+	background-color: #45a049;
+	color: white;
+}
+
+td {
+	color: black;
+}
+
+#forwards {
+	clear: both;
+	float: left;
+}
+
+#midfielders, #defenders, #goalkeeper {
+	float: left;
+}
